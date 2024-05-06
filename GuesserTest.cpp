@@ -70,6 +70,21 @@ TEST(GuesserTest, match_long_guess)
     ASSERT_FALSE(actual);
 }
 
+TEST(GuesserTest, match_extra_long_guess)
+{
+	Guesser guesser("sec");
+	bool actual = guesser.match("s3kr3tasdadalkasdsdasdadasdasdasjndiajsdlnaklkn");
+    ASSERT_FALSE(actual);
+}
+
+
+TEST(GuesserTest, match_short_guess)
+{
+	Guesser guesser("secretPassword");
+	bool actual = guesser.match("secret");
+    ASSERT_FALSE(actual);
+}
+
 TEST(GuesserTest, remaining_reset)
 {
 	Guesser guesser("1");
@@ -86,7 +101,7 @@ TEST(GuesserTest, remaining_three)
     ASSERT_EQ( guesser.remaining(), 3 );
 }
 
-TEST(GuesserTest, remaining_zero)
+TEST(GuesserTest, match_remaining_zero)
 {
 	Guesser guesser("secret");
     bool actual = guesser.match("secret1");
@@ -94,6 +109,16 @@ TEST(GuesserTest, remaining_zero)
 	actual = guesser.match("secret1");
 	actual = guesser.match("secret");
     ASSERT_FALSE(actual);
+}
+
+TEST(GuesserTest, remaining_zero)
+{
+	Guesser guesser("secret");
+    bool actual = guesser.match("secret1");
+	actual = guesser.match("secret1");
+	actual = guesser.match("secret1");
+	actual = guesser.match("secret1");
+    ASSERT_EQ( guesser.remaining(), 0);
 }
 
 TEST(GuesserTest, secret_truncate_32)
